@@ -5,7 +5,7 @@ const Card = (props) => {
   let tagsArray = null;
 
   useEffect(() => {
-    fetch('http://localhost:8002/tags')
+    fetch('http://localhost:8002/api/tags')
     .then((response) => response.json())
     .then((data) => setTagsStyles(data));
   })
