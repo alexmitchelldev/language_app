@@ -191,7 +191,6 @@ export default function Header() {
           </>
         )}
       </Disclosure>
-      <AddCard addCard={addCard} />
     </>
   );
 }
