@@ -33,7 +33,7 @@ const AddCard = (props) => {
         .split("#")
         .map((tag) => tag.trim())
         .filter((tag) => tag !== "")
-    );
+    ).replace(/"/g, "'");
   };
 
   const formatCardAttributeString = (cardAttributeString) => {
@@ -44,7 +44,7 @@ const AddCard = (props) => {
     <>
       <div className="mt-3">
         <button
-          className="px-5 py-3 mx-auto block text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+          className="px-5 py-3 mx-auto block text-sm bg-gray-800 text-white font-semibold rounded-full border border-gray-200 hover:bg-gray-600 hover:border-transparent focus:outline-none focus:ring-1"
           onClick={handleShow}
         >
           Add Card
@@ -58,14 +58,14 @@ const AddCard = (props) => {
               onSubmit={(e) => {
                 // prevent page refresh
                 e.preventDefault();
-                props.addCard(
-                  titleFront,
-                  titleBack,
-                  textFront,
-                  tags,
-                  languageFront,
-                  languageBack
-                );
+                props.addCard({
+                  titleFront: titleFront,
+                  titleBack: titleBack,
+                  textFront: textFront,
+                  tags: tags,
+                  languageFront: languageFront,
+                  languageBack: languageBack
+                });
 
                 setShow(false);
                 setTitleFront("");
@@ -243,18 +243,18 @@ const AddCard = (props) => {
           </Modal.Body>
           <Modal.Footer>
             <button
-              className="inline-block px-6 py-2.5 bg-gray-600 hover:bg-gray-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
+              className="inline-block px-6 py-2.5 bg-gray-800 hover:bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
               onClick={handleClose}
             >
               Close
             </button>
             <button
-              className="inline-block px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
+              className="inline-block px-6 py-2.5 bg-blue-800 hover:bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
               form="add-card-modal"
               value="Submit"
               onClick={handleSave}
             >
-              Save
+              Add Card
             </button>
           </Modal.Footer>
         </Modal>
