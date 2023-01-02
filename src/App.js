@@ -1,3 +1,4 @@
+import Header from "./components/Header";
 import Card from "./components/Card";
 import { useState, useEffect } from "react";
 
@@ -12,12 +13,12 @@ export default function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Cards</h1>
-      {cards.map((card, index) => {
-        return (
-          <Card {...card} key={index}/>
-        );
-      })}
+      <Header></Header>
+      <div className="flex flex-wrap justify-center mx-auto" style={{width: "90%"}}>
+        {cards.map((card, index) => {
+          return <Card {...card} key={index} />;
+        })}
+      </div>
     </>
   );
 }
