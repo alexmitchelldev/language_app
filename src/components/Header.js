@@ -15,29 +15,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const addCard = (
-  titleFront,
-  titleBack,
-  textFront,
-  tags,
-  languageFront,
-  languageBack
-) => {
-    const addCardBody = new URLSearchParams({
-        "titleFront": titleFront,
-        "titleBack": titleBack,
-        "textFront": textFront,
-        "tags": tags,
-        "languageFront": languageFront,
-        "languageBack": languageBack
-    });
-    // https://stackoverflow.com/questions/71678250/how-to-post-body-data-using-fetch-api
-    fetch('http://localhost:8002/api/cards', {
-        method: "POST",
-        body: addCardBody
-    })
-};
-
 export default function Header(props) {
   return (
     <>
