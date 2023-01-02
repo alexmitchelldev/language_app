@@ -32,7 +32,13 @@ const Card = (props) => {
     "coffee break french": {
       color: {
         background: "bg-yellow-600",
-        text: "text-yellow-800"
+        text: "text-yellow-900"
+      }
+    },
+    verb: {
+      color: {
+        background: "bg-yellow-200",
+        text: "text-yellow-500"
       }
     }
   };
