@@ -65,7 +65,7 @@ const Card = (props) => {
           {props.tags
             ? tagsArray.map((tag) => {
                 let tagClass =
-                  "inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2";
+                  "inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 hover:cursor-pointer";
                 const tagBackground = tags[`${tag}`]
                   ? tags[`${tag}`].color.background
                   : "bg-gray-200";
