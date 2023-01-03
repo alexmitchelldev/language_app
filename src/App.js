@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import Cards from "./pages/Cards";
 import AddCard from "./components/AddCard";
 
-export default function App() {
+export default function LanguageApp() {
   return (
     <>
       <Header>
