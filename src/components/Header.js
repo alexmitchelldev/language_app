@@ -4,8 +4,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import AddCard from "./AddCard";
 
 const navigation = [
-  { name: "Study", href: "#", current: true },
-  { name: "My Cards", href: "#", current: false },
+  { name: "Study", href: "/study", current: true },
+  { name: "My Cards", href: "/mycards", current: false },
   //   { name: 'Team', href: '#', current: false },
   //   { name: 'Projects', href: '#', current: false },
   //   { name: 'Calendar', href: '#', current: false },
