@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import EditCard from "./EditCard";
 import Modal from "react-bootstrap/Modal";
 
+const MAX_TAGS_TO_DISPLAY = 4;
+
 const Card = (props) => {
   const [tagsStyles, setTagsStyles] = useState([]);
   const [titleFront, setTitleFront] = useState(props.title_front);
@@ -107,11 +109,14 @@ const Card = (props) => {
                   ? tags[`${tag}`].color.text
                   : "text-gray-700";
                 tagClass += ` ${tagBackground} ${tagText}`;
-                return <span className={tagClass} key={index}>#{tag}</span>;
+                return index < MAX_TAGS_TO_DISPLAY ? <span className={tagClass} key={index}>#{tag}</span> : null;
               })
             : null}
+            {cardTags.length > MAX_TAGS_TO_DISPLAY ? <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold mr-2 hover:cursor-pointer bg-gray-200">...</span> : null}
         </div>
-        <EditCard card={props}/>
+        <div style={{position: 'absolute', bottom: 0}}>
+          <EditCard card={props}/>
+        </div>
       </div>
     </>
   );
