@@ -83,7 +83,7 @@ const Card = (props) => {
   return (
     <>
       <div 
-      className="w-full md:w-1/3 lg:w-1/5 rounded overflow-hidden shadow-lg m-1 hover:cursor-pointer"
+      className="flex-initial w-full md:w-1/3 lg:w-1/5 min-h-64 max-h-64 rounded overflow-hidden shadow-lg m-1 hover:cursor-pointer relative"
       onClick={handleShow}>
         {props.img ? (
           <img
@@ -97,11 +97,10 @@ const Card = (props) => {
           {/* <div className="text-xs">Created: {props.create_date}</div> */}
           <p className="text-gray-700 text-base">{props.text_front}</p>
         </div>
-        <div className="px-6 pt-4 pb-2">
+        <div className="pb-10 pl-4">
           {props.tags
             ? cardTags.map((tag, index) => {
-                let tagClass =
-                  "inline-block rounded-full px-3 py-1 text-xs font-semibold mr-2 hover:cursor-pointer";
+                let tagClass = "inline-block rounded-full px-3 py-1 text-xs font-semibold mr-2 hover:cursor-pointer";
                 const tagBackground = tags[`${tag}`]
                   ? tags[`${tag}`].color.background
                   : "bg-gray-200";
