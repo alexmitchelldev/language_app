@@ -14,13 +14,6 @@ const Card = (props) => {
 
   let tagsArray = null;
 
-  
-  // useEffect(() => {
-  //   fetch("http://localhost:8002/api/tags")
-  //     .then((response) => response.json())
-  //     .then((data) => setTagsStyles(data));
-  // });
-
   const [show, setShow] = useState(false);
   const handleShow = () => {
     setShow(true);
@@ -71,19 +64,6 @@ const Card = (props) => {
     },
   };
 
-  if (props.tags) {
-    // tagsArray = JSON.parse(props.tags);
-    cardTags.sort((a, b) => {
-      return a.length - b.length;
-    })
-    // tagsArray.sort((a, b) => {
-    //   return a.length - b.length;
-    // });
-  }
-
-  const editCard = () => {
-
-  };
 
   const formatTagsString = (tagsString) => {
     return JSON.stringify(
