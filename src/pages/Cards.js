@@ -35,14 +35,13 @@ const Cards = () => {
     <>
       {GetCards()}
       <div
-        className="flex flex-wrap justify-center mx-auto lg:w-4/5"
+        className="flex flex-wrap justify-center"
         id="cards-area"
       >
         {cards.map((card, index) => {
           return <Card {...card} key={index} />;
         })}
       </div>
-      <AddCard addCard={addCard} />
     </>
   );
 };
