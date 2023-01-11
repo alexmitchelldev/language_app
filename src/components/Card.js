@@ -67,7 +67,7 @@ class Card extends React.Component {
 
     return (
       <>
-        <div className="flex-initial w-full md:w-1/3 lg:w-1/5 min-h-64 max-h-64 rounded overflow-hidden shadow-lg m-1 hover:cursor-pointer relative">
+        <div className="flex-initial w-full md:w-1/3 lg:w-[24%] min-h-[225px] rounded overflow-hidden shadow-lg m-1 hover:cursor-pointer relative">
           <div className="px-6 py-4">
             { isFlipped ? (
               <>
