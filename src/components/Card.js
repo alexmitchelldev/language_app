@@ -106,7 +106,7 @@ class Card extends React.Component {
               </span>
             ) : null}
           </div>
-          <button className="flip-button px-2 ml-4 mb-2 block text-sm bg-gray-200 text-gray-500 font-semibold rounded border border-gray-200 hover:bg-gray-100 hover:border-transparent focus:outline-none focus:ring-1" onClick={this.handleFlip}>Flip</button>
+          {/* <button className="flip-button px-2 ml-4 mb-2 block text-sm bg-gray-200 text-gray-500 font-semibold rounded border border-gray-200 hover:bg-gray-100 hover:border-transparent focus:outline-none focus:ring-1" onClick={this.handleFlip}>Flip</button> */}
           <div style={{ position: "absolute", bottom: 0 }}>
             <EditCard card={this.props} />
           </div>
