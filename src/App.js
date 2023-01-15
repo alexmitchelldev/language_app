@@ -1,5 +1,4 @@
 import Header from "./components/Header";
-import Cards from "./pages/Cards";
 import MyCards from "./pages/MyCards.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

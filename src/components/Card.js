@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import EditCard from "./EditCard";
-import Modal from "react-bootstrap/Modal";
 import React from "react";
 
 const MAX_TAGS_TO_DISPLAY = 4;

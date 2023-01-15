@@ -74,6 +74,7 @@ const AddCard = (props) => {
                 titleFront: titleFront,
                 titleBack: titleBack,
                 textFront: textFront,
+                textBack: textBack,
                 tags: tags,
                 languageFront: languageFront,
                 languageBack: languageBack,
