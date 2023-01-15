@@ -1,5 +1,6 @@
 import Cards from "../pages/Cards";
 import AddCard from "./AddCard";
+import FlashcardModal from "./NewAddCard";
 
 const CardsArea = () => {
   return (
@@ -41,7 +42,8 @@ const CardsArea = () => {
               </select>
             </div>
           <div className="mb-1 w-full md:w-auto">
-            <AddCard />
+            <FlashcardModal />
+            {/* <AddCard /> */}
           </div>
           <div className="mb-1 w-full md:w-auto">
             <button className="bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded-md w-full md:w-auto">
