@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-// import { Dropdown, Button } from "react-bootstrap";
-import { Icon } from "semantic-ui-react";
 import Dropdown from "react-dropdown";
 import "../index.css";
 
@@ -48,6 +46,10 @@ const FlashcardModal = (props) => {
   const formatCardAttributeString = (cardAttributeString) => {
     return cardAttributeString.replace(/'/g, "''");
   };
+
+  const isStudying = false;
+  const isAddCard = true;
+  const isEditCard = false;
 
   return (
     <>
@@ -105,7 +107,10 @@ const FlashcardModal = (props) => {
               type="text"
               placeholder="Title..."
             ></input>
-            <textarea className="appearance-none min-w-full text-1xl mb-3 no-border no-focus" placeholder="Description..."></textarea>
+            <textarea
+              className="appearance-none min-w-full text-1xl mb-3 no-border no-focus"
+              placeholder="Description..."
+            ></textarea>
             <input
               className="appearance-none min-w-full text-1xl no-focus"
               type="text"
@@ -113,21 +118,45 @@ const FlashcardModal = (props) => {
             ></input>
           </form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer class="flex items-center justify-center p-2">
           <button
-            className="inline-block px-6 py-2.5 bg-gray-800 hover:bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
+            className="inline-block px-6 py-2.5 bg-gray-800 hover:bg-gray-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 mr-2"
             onClick={handleClose}
           >
             Close
           </button>
-          <button
-            className="inline-block px-6 py-2.5 bg-blue-800 hover:bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
-            form="add-card-modal"
-            value="Submit"
-            onClick={handleSave}
-          >
-            Add Card
-          </button>
+          {isStudying ? (
+            <>
+              <button
+                className="inline-block px-6 py-2.5 bg-red-800 hover:bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2"
+                form="add-card-modal"
+                value="Submit"
+                onClick={handleSave}
+              >
+                Flip
+              </button>
+            </>
+          ) : null}
+          {isAddCard ? (
+            <button
+              className="inline-block px-6 py-2.5 bg-blue-800 hover:bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2"
+              form="add-card-modal"
+              value="Submit"
+              onClick={handleSave}
+            >
+              Add
+            </button>
+          ) : null}
+          {isEditCard ? (
+            <button
+              className="inline-block px-6 py-2.5 bg-green-800 hover:bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2"
+              form="add-card-modal"
+              value="Submit"
+              onClick={handleSave}
+            >
+              Save
+            </button>
+          ) : null}
         </Modal.Footer>
       </Modal>
     </>
