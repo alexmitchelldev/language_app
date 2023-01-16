@@ -1,87 +1,48 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-dropdown";
-import "../index.css";
-import CardModal from "./CardModal.js";
 
-const FlashcardModal = (props) => {
-  const [titleFront, setTitleFront] = useState("");
-  const [titleBack, setTitleBack] = useState("");
-  const [textFront, setTextFront] = useState("");
-  const [textBack, setTextBack] = useState("");
-  const [tags, setTags] = useState("");
-  const [languageFront, setLanguageFront] = useState("");
-  const [languageBack, setLanguageBack] = useState("");
+class CardModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAddCard: false,
+      isEditCard: false,
+      isStudying: false,
+      show: false,
+    };
+    this.options = [
+        { key: "en", text: "English", value: "en" },
+        { key: "fr", text: "French", value: "fr" },
+      ];
+  }
 
-  const options = [
-    { key: "en", text: "English", value: "en" },
-    { key: "fr", text: "French", value: "fr" },
-  ];
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => {
-    setShow(false);
-    setTitleFront("");
-    setTitleBack("");
-    setTextFront("");
-    setTags("");
-    setLanguageFront("");
-    setLanguageBack("");
+  setShow = (showState) => {
+    this.setState({
+      show: showState,
+    });
   };
 
-  const handleSave = () => {
-    setShow(false);
-  };
-  const handleShow = () => setShow(true);
+  handleClose = () => {
+    this.setState({
+        show: false
+    })
+  }
 
-  const formatTagsString = (tagsString) => {
-    return JSON.stringify(
-      tagsString
-        .split("#")
-        .map((tag) => tag.trim())
-        .filter((tag) => tag !== "")
-    ).replace(/"/g, "'");
-  };
+  render() {
+    const { isAddCard, isEditCard, isStudying, show } = this.state;
+    const { options } = this.options;
+    const { handleClose } = this;
 
-  const formatCardAttributeString = (cardAttributeString) => {
-    return cardAttributeString.replace(/'/g, "''");
-  };
-
-  const isStudying = false;
-  const isAddCard = true;
-  const isEditCard = false;
-
-  return (
-    <>
-      <button
-        className="bg-gray-600 hover:bg-gray-800 text-white py-1 px-6 rounded-md mr-2 w-full md:w-auto"
-        onClick={handleShow}
-      >
-        <span className="text-lg font-medium">Add Card (NEW)</span>
-        <svg
-          className="h-6 w-6 inline"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+    return (
+      <>
+        <Modal
+          show={show}
+          dialogClassName="add-card-modal"
+          // https://react-bootstrap.github.io/components/modal/
+          className="card-modal modal-lg"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      </button>
-      <CardModal />
-      {/* <Modal
-        show={show}
-        onHide={handleClose}
-        dialogClassName="add-card-modal"
-        // https://react-bootstrap.github.io/components/modal/
-        className="card-modal modal-lg"
-      >
-        <Modal.Header>
+            <Modal.Header>
           <Dropdown
             options={options}
             className="relative right-0"
@@ -133,7 +94,7 @@ const FlashcardModal = (props) => {
                 className="inline-block px-6 py-2.5 bg-red-800 hover:bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2"
                 form="add-card-modal"
                 value="Submit"
-                onClick={handleSave}
+                onClick={handleClose}
               >
                 Flip
               </button>
@@ -144,7 +105,7 @@ const FlashcardModal = (props) => {
               className="inline-block px-6 py-2.5 bg-blue-800 hover:bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2"
               form="add-card-modal"
               value="Submit"
-              onClick={handleSave}
+              onClick={handleClose}
             >
               Add
             </button>
@@ -154,15 +115,16 @@ const FlashcardModal = (props) => {
               className="inline-block px-6 py-2.5 bg-green-800 hover:bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2"
               form="add-card-modal"
               value="Submit"
-              onClick={handleSave}
+              onClick={handleClose}
             >
               Save
             </button>
           ) : null}
         </Modal.Footer>
-      </Modal> */}
-    </>
-  );
-};
+        </Modal>
+      </>
+    );
+  }
+}
 
-export default FlashcardModal;
+export default CardModal;
