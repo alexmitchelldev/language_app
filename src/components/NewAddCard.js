@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 // import { Dropdown, Button } from "react-bootstrap";
 import { Icon } from "semantic-ui-react";
 import Dropdown from "react-dropdown";
+import "../index.css";
 
 const FlashcardModal = (props) => {
   const [titleFront, setTitleFront] = useState("");
@@ -73,14 +74,8 @@ const FlashcardModal = (props) => {
         show={show}
         onHide={handleClose}
         dialogClassName="add-card-modal"
-        className=""
-        style={{
-          width: "50vw",
-          height: "40vh",
-          position: "absolute",
-          top: "25%",
-          left: "25%",
-        }}
+        // https://react-bootstrap.github.io/components/modal/
+        className="card-modal modal-lg"
       >
         <Modal.Header>
           <Dropdown
@@ -106,17 +101,13 @@ const FlashcardModal = (props) => {
         <Modal.Body>
           <form>
             <input
-              className="appearance-none min-w-full text-3xl mb-3"
+              className="appearance-none min-w-full text-3xl mb-3 no-focus"
               type="text"
               placeholder="Title..."
             ></input>
+            <textarea className="appearance-none min-w-full text-1xl mb-3 no-border no-focus" placeholder="Description..."></textarea>
             <input
-              className="appearance-none min-w-full text-1xl mb-3"
-              type="text"
-              placeholder="Description..."
-            ></input>
-            <input
-              className="appearance-none min-w-full text-1xl"
+              className="appearance-none min-w-full text-1xl no-focus"
               type="text"
               placeholder="Tags..."
             ></input>
