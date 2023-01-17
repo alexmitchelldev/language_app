@@ -9,6 +9,7 @@ class CardModal extends React.Component {
       isAddCard: props.isAddCard ? props.isAddCard : false,
       isEditCard: props.isEditCard ? props.isEditCard : false,
       isStudyCard: props.isStudyCard ? props.isStudyCard : false,
+      isDelete: false,
       handleClose: props.handleClose,
     };
     this.data = props.data ? props.data : 
@@ -28,12 +29,16 @@ class CardModal extends React.Component {
     ];
   }
 
+  handleDelete = () => {
+    this.setState({ isDelete: true})
+  }
+
   button() {
-    const { isAddCard, isEditCard, isStudyCard, handleClose } = this.state;
+    const { isAddCard, isEditCard, isStudyCard, handleClose, } = this.state;
+    const { handleDelete } = this;
 
     let buttonClass = `inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2`;
     let buttonText = ``;
-    let form = '';
 
     if (isAddCard) {
       buttonClass += " bg-blue-800 hover:bg-blue-600";
@@ -54,6 +59,17 @@ class CardModal extends React.Component {
         >
           Close
         </button>
+        {isEditCard ? (
+          <>
+          <button
+          className="inline-block px-6 py-2.5 bg-red-800 hover:bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
+          form="card-modal"
+          onClick={handleDelete}
+        >
+          Delete
+        </button>
+          </>
+        ): null}
         <button
           className={buttonClass}
           form="card-modal"
@@ -113,19 +129,25 @@ class CardModal extends React.Component {
             onSubmit={(e) => {
               e.preventDefault();
 
-              const { isAddCard, isEditCard, isStudyCard } = this.state;
+              const { isAddCard, isEditCard, isStudyCard, isDelete } = this.state;
+              if (isDelete) {
+                this.props.deleteCard(this.data.id);
+              }
 
               if (isAddCard) {
                 this.props.addCard(this.data);
               }
 
-              // if (isEditCard) {}
+              if (isEditCard) {
+                this.props.editCard(this.data);
+              }
             }}
             id="card-modal">
               <input
                 className="appearance-none min-w-full text-3xl mb-3 no-focus"
                 type="text"
                 placeholder="Title..."
+                defaultValue={this.data.titleFront}
                 onChange={(title) => {
                   this.data.titleFront = title.target.value;
                 }}
@@ -133,6 +155,7 @@ class CardModal extends React.Component {
               <textarea
                 className="appearance-none min-w-full text-1xl mb-3 no-border no-focus"
                 placeholder="Description..."
+                defaultValue={this.data.textFront}
                 onChange={(description) => {
                   this.data.textFront = description.target.value;
                 }}
@@ -141,6 +164,7 @@ class CardModal extends React.Component {
                 className="appearance-none min-w-full text-1xl no-focus"
                 type="text"
                 placeholder="Tags..."
+                defaultValue={this.data.tags}
                 onChange={(tags) => {
                   this.data.tags = this.formatTagString(tags.target.value);
                 }}
