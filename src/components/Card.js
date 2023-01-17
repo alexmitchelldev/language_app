@@ -69,13 +69,14 @@ class Card extends React.Component {
           <div className="px-6 py-4">
             { isFlipped ? (
               <>
-              <div className="font-bold text-xl mb-2">{this.data.titleFront}</div>
-              <p className="text-gray-700 text-base">{this.data.textFront}</p>
-              </>
-            ) : (
-              <>
               <div className="font-bold text-xl mb-2">{this.data.titleBack}</div>
               <p className="text-gray-700 text-base">{this.data.textBack}</p>
+              </>
+              
+            ) : (
+              <>
+              <div className="font-bold text-xl mb-2">{this.data.titleFront}</div>
+              <p className="text-gray-700 text-base">{this.data.textFront}</p>
               </>
             )}
           </div>

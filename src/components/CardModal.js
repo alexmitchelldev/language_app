@@ -11,6 +11,17 @@ class CardModal extends React.Component {
       isStudyCard: props.isStudyCard ? props.isStudyCard : false,
       handleClose: props.handleClose,
     };
+    this.data = props.data ? props.data : 
+    {
+      titleFront: null,
+      titleBack: null,
+      textFront: null,
+      textBack: null,
+      tags: null,
+      languageFront: null,
+      languageBack: null
+    };
+
     this.options = [
       { key: "en", text: "English", value: "en" },
       { key: "fr", text: "French", value: "fr" },
@@ -22,6 +33,7 @@ class CardModal extends React.Component {
 
     let buttonClass = `inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2`;
     let buttonText = ``;
+    let form = '';
 
     if (isAddCard) {
       buttonClass += " bg-blue-800 hover:bg-blue-600";
@@ -44,14 +56,22 @@ class CardModal extends React.Component {
         </button>
         <button
           className={buttonClass}
-          form="add-card-modal"
+          form="card-modal"
           value="Submit"
-          onClick={handleClose}
         >
           {buttonText}
         </button>
       </>
     );
+  }
+
+  formatTagString (tagsString) {
+    return JSON.stringify(
+      tagsString
+        .split('#')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag!== "")
+    ).replace(/"/g, "'");
   }
 
   render() {
@@ -89,20 +109,41 @@ class CardModal extends React.Component {
             </button>
           </Modal.Header>
           <Modal.Body>
-            <form>
+            <form
+            onSubmit={(e) => {
+              e.preventDefault();
+
+              const { isAddCard, isEditCard, isStudyCard } = this.state;
+
+              if (isAddCard) {
+                this.props.addCard(this.data);
+              }
+
+              // if (isEditCard) {}
+            }}
+            id="card-modal">
               <input
                 className="appearance-none min-w-full text-3xl mb-3 no-focus"
                 type="text"
                 placeholder="Title..."
+                onChange={(title) => {
+                  this.data.titleFront = title.target.value;
+                }}
               ></input>
               <textarea
                 className="appearance-none min-w-full text-1xl mb-3 no-border no-focus"
                 placeholder="Description..."
+                onChange={(description) => {
+                  this.data.textFront = description.target.value;
+                }}
               ></textarea>
               <input
                 className="appearance-none min-w-full text-1xl no-focus"
                 type="text"
                 placeholder="Tags..."
+                onChange={(tags) => {
+                  this.data.tags = this.formatTagString(tags.target.value);
+                }}
               ></input>
             </form>
           </Modal.Body>
