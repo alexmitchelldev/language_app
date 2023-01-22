@@ -90,10 +90,38 @@ class CardModal extends React.Component {
     ).replace(/"/g, "'");
   }
 
+  renderTags (tags) {
+    return tags.toString().split(',').map((tag) => `#${tag}`).join(' ');
+  }
+
+  formatDataForDatabase (data) {
+
+    function formatText (text) {
+      return text.replace(/'/g, "''");
+    }
+
+    for (const key in data) {
+      if (typeof data[key] === 'string' && key !== 'tags') {
+          data[key] = formatText(data[key]);
+      }
+      
+      //TODO fix this so double quotations '' are correctly entered into db 
+      // if (Array.isArray(data[key])) {
+      //     console.log(data[key]);
+      //     data[key] = data[key].map((element) => typeof element === 'string' ? formatText(element) : element );
+      // }
+    }
+
+    console.log(data);
+
+    return data;
+  }
+
   render() {
-    const { isAddCard, isEditCard, isStudyCard } = this.state;
+    const { isAddCard, isEditCard, isStudyCard, handleClose } = this.state;
     const { options } = this.options;
-    const { handleClose } = this.state;
+    const { data, formatText, renderTags, formatDataForDatabase } = this;
+    const { addCard, editCard, deleteCard } = this.props;
 
     return (
       <>
@@ -139,7 +167,8 @@ class CardModal extends React.Component {
               }
 
               if (isEditCard) {
-                this.props.editCard(this.data);
+                editCard(formatDataForDatabase(data));
+                console.log(data);
               }
             }}
             id="card-modal">
@@ -164,7 +193,7 @@ class CardModal extends React.Component {
                 className="appearance-none min-w-full text-1xl no-focus"
                 type="text"
                 placeholder="Tags..."
-                defaultValue={this.data.tags}
+                defaultValue={isEditCard ? renderTags(data.tags) : data.tags}
                 onChange={(tags) => {
                   this.data.tags = this.formatTagString(tags.target.value);
                 }}
