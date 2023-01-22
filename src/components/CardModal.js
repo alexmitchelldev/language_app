@@ -80,13 +80,8 @@ class CardModal extends React.Component {
     );
   }
 
-  formatTagString (tagsString) {
-    return JSON.stringify(
-      tagsString
-        .split('#')
-        .map((tag) => tag.trim())
-        .filter((tag) => tag!== "")
-    ).replace(/"/g, "'");
+  createTagsArray (tagsString) {
+    return JSON.stringify(tagsString.toString().split('#').map((tag) => tag.trim()).filter((tag) => tag !== "")).replace(/"/g, "'");
   }
 
   renderTags (tags) {
@@ -108,8 +103,6 @@ class CardModal extends React.Component {
           data[key] = formatText(data[key]);
       }
     }
-
-    console.log(data);
 
     return data;
   }
@@ -164,7 +157,6 @@ class CardModal extends React.Component {
 
               if (isEditCard) {
                 editCard(formatDataForDatabase(data));
-                console.log(data);
               }
             }}
             id="card-modal">
@@ -189,9 +181,9 @@ class CardModal extends React.Component {
                 className="appearance-none min-w-full text-1xl no-focus"
                 type="text"
                 placeholder="Tags..."
-                defaultValue={isEditCard ? renderTags(data.tags) : data.tags}
+                defaultValue={renderTags(data.tags)}
                 onChange={(tags) => {
-                  this.data.tags = this.formatTagString(tags.target.value);
+                  this.data.tags = this.createTagsArray(tags.target.value);
                 }}
               ></input>
             </form>
