@@ -1,8 +1,6 @@
 import EditCard from "./EditCard";
 import React from "react";
 
-const MAX_TAGS_TO_DISPLAY = 4;
-
 const tags = {
   "french comprehensible input": {
     color: {
@@ -52,6 +50,7 @@ class Card extends React.Component {
       languageFront: props.language_front,
       languageBack: props.language_back,
     };
+    this.MAX_TAGS_TO_DISPLAY = 4;
   }
 
   handleFlip = () => {
@@ -62,6 +61,7 @@ class Card extends React.Component {
 
   render() {
     const { isFlipped } = this.state;
+    const { MAX_TAGS_TO_DISPLAY } = this;
 
     return (
       <>
