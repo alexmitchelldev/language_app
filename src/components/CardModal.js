@@ -9,31 +9,36 @@ class CardModal extends React.Component {
       isAddCard: props.isAddCard ? props.isAddCard : false,
       isEditCard: props.isEditCard ? props.isEditCard : false,
       isStudyCard: props.isStudyCard ? props.isStudyCard : false,
-      isDelete: false,
+      isDeleteCard: false,
       handleClose: props.handleClose,
     };
-    this.data = props.data ? props.data : 
-    {
-      titleFront: null,
-      titleBack: null,
-      textFront: null,
-      textBack: null,
-      tags: null,
-      languageFront: null,
-      languageBack: null
-    };
+    this.data = props.data
+      ? props.data
+      : {
+          titleFront: null,
+          titleBack: null,
+          textFront: null,
+          textBack: null,
+          tags: null,
+          languageFront: null,
+          languageBack: null,
+        };
     this.options = [
       { key: "en", text: "English", value: "en" },
       { key: "fr", text: "French", value: "fr" },
     ];
+    this.regex = {
+      singleQuote: /'/g,
+      squareBrackets: /\[|\]/g,
+    };
   }
 
   handleDelete = () => {
-    this.setState({ isDelete: true})
-  }
+    this.setState({ isDeleteCard: true });
+  };
 
   button() {
-    const { isAddCard, isEditCard, isStudyCard, handleClose, } = this.state;
+    const { isAddCard, isEditCard, isStudyCard, handleClose } = this.state;
     const { handleDelete } = this;
 
     let buttonClass = `inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60 ml-2`;
@@ -60,57 +65,71 @@ class CardModal extends React.Component {
         </button>
         {isEditCard ? (
           <>
-          <button
-          className="inline-block px-6 py-2.5 bg-red-800 hover:bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
-          form="card-modal"
-          onClick={handleDelete}
-        >
-          Delete
-        </button>
+            <button
+              className="inline-block px-6 py-2.5 bg-red-800 hover:bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out opacity-60"
+              form="card-modal"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
           </>
-        ): null}
-        <button
-          className={buttonClass}
-          form="card-modal"
-          value="Submit"
-        >
+        ) : null}
+        <button className={buttonClass} form="card-modal" value="Submit">
           {buttonText}
         </button>
       </>
     );
   }
 
-  createTagsArray (tagsString) {
-    return JSON.stringify(tagsString.toString().split('#').map((tag) => tag.trim()).filter((tag) => tag !== "")).replace(/"/g, "'");
+  createTagsArray(tagsString) {
+    return JSON.stringify(
+      tagsString
+        .toString()
+        .split("#")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== "")
+    ).replace(/"/g, "'");
   }
 
-  renderTags (tags) {
+  renderTags(tags) {
     // https://www.fwait.com/how-to-replace-all-square-brackets-in-javascript/
+    const singleQuoteRegex = /'/g;
     const squareBracketsRegex = /\[|\]/g;
-    const singleQuotationRegex = /'/g;
-    
-    return tags !== null ? tags.toString().split(`,`).map((tag) => `#${tag}`).join(` `).replace(squareBracketsRegex, ``).replace(singleQuotationRegex, ``) : ``;
+
+    return tags !== null
+      ? tags
+          .toString()
+          .split(`,`)
+          .map((tag) => `#${tag}`)
+          .join(` `)
+          .replace(squareBracketsRegex, ``)
+          .replace(singleQuoteRegex, ``)
+      : ``;
   }
 
-  formatDataForDatabase (data) {
+  formatCardDataForDatabase(cardData) {
+    // PostgreSQL INSERT statement for a column of data type VARCHAR will crash if the value contains a single quote
+    // Repeating the single quote ensures data is inserted correctly
+    const doubleSingleQuote = `''`;
+    const singleQuoteRegex = /'/g;
 
-    function formatText (text) {
-      return text.replace(/'/g, "''");
-    }
-
-    for (const key in data) {
-      if (typeof data[key] === 'string' && key !== 'tags') {
-          data[key] = formatText(data[key]);
+    for (const key in cardData) {
+      if (typeof cardData[key] === "string" && key !== "tags") {
+        cardData[key] = cardData[key].replace(
+          singleQuoteRegex,
+          doubleSingleQuote
+        );
       }
     }
 
-    return data;
+    return cardData;
   }
 
   render() {
-    const { isAddCard, isEditCard, isStudyCard, handleClose } = this.state;
-    const { data, options, renderTags, formatDataForDatabase } = this;
-    const { editCard } = this.props;
+    const { isAddCard, isEditCard, isStudyCard, isDeleteCard, handleClose } =
+      this.state;
+    const { data, options, renderTags, formatCardDataForDatabase } = this;
+    const { addCard, editCard } = this.props;
 
     return (
       <>
@@ -143,23 +162,20 @@ class CardModal extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <form
-            onSubmit={(e) => {
-              e.preventDefault();
+              onSubmit={(e) => {
+                e.preventDefault();
 
-              const { isAddCard, isEditCard, isDelete } = this.state;
-              if (isDelete) {
-                this.props.deleteCard(this.data.id);
-              }
-
-              if (isAddCard) {
-                this.props.addCard(this.data);
-              }
-
-              if (isEditCard) {
-                editCard(formatDataForDatabase(data));
-              }
-            }}
-            id="card-modal">
+                if (isDeleteCard) {
+                  console.log(data);
+                  this.props.deleteCard(data.id);
+                } else if (isAddCard) {
+                  addCard(formatCardDataForDatabase(data));
+                } else if (isEditCard) {
+                  editCard(formatCardDataForDatabase(data));
+                }
+              }}
+              id="card-modal"
+            >
               <input
                 className="appearance-none min-w-full text-3xl mb-3 no-focus"
                 type="text"
