@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Modal from "react-bootstrap/Modal";
+import React from "react";
 import CardModal from "./CardModal.js";
 
 class EditCard extends React.Component {
@@ -39,7 +38,7 @@ class EditCard extends React.Component {
       body: editedCard,
     });
 
-    this.handleShow();
+    this.handleClose();
   };
   
   deleteCard = (cardID) => {
@@ -47,6 +46,7 @@ class EditCard extends React.Component {
     fetch(`http://localhost:8002/api/cards/${cardID}`, {
       method: "DELETE",
     });
+
     this.handleClose();
   }
 
