@@ -89,7 +89,7 @@ class CardModal extends React.Component {
     const squareBracketsRegex = /\[|\]/g;
     const singleQuotationRegex = /'/g;
     
-    return tags.toString().split(`,`).map((tag) => `#${tag}`).join(` `).replace(squareBracketsRegex, ``).replace(singleQuotationRegex, ``);
+    return tags !== null ? tags.toString().split(`,`).map((tag) => `#${tag}`).join(` `).replace(squareBracketsRegex, ``).replace(singleQuotationRegex, ``) : ``;
   }
 
   formatDataForDatabase (data) {
