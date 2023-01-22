@@ -90,7 +90,11 @@ class CardModal extends React.Component {
   }
 
   renderTags (tags) {
-    return tags.toString().split(',').map((tag) => `#${tag}`).join(' ');
+    // https://www.fwait.com/how-to-replace-all-square-brackets-in-javascript/
+    const squareBracketsRegex = /\[|\]/g;
+    const singleQuotationRegex = /'/g;
+    
+    return tags.toString().split(`,`).map((tag) => `#${tag}`).join(` `).replace(squareBracketsRegex, ``).replace(singleQuotationRegex, ``);
   }
 
   formatDataForDatabase (data) {
