@@ -166,7 +166,6 @@ class CardModal extends React.Component {
                 e.preventDefault();
 
                 if (isDeleteCard) {
-                  console.log(data);
                   this.props.deleteCard(data.id);
                 } else if (isAddCard) {
                   addCard(formatCardDataForDatabase(data));
