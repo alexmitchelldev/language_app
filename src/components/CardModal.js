@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-dropdown";
 
@@ -22,7 +22,6 @@ class CardModal extends React.Component {
       languageFront: null,
       languageBack: null
     };
-
     this.options = [
       { key: "en", text: "English", value: "en" },
       { key: "fr", text: "French", value: "fr" },
@@ -104,12 +103,6 @@ class CardModal extends React.Component {
       if (typeof data[key] === 'string' && key !== 'tags') {
           data[key] = formatText(data[key]);
       }
-      
-      //TODO fix this so double quotations '' are correctly entered into db 
-      // if (Array.isArray(data[key])) {
-      //     console.log(data[key]);
-      //     data[key] = data[key].map((element) => typeof element === 'string' ? formatText(element) : element );
-      // }
     }
 
     console.log(data);
@@ -119,9 +112,8 @@ class CardModal extends React.Component {
 
   render() {
     const { isAddCard, isEditCard, isStudyCard, handleClose } = this.state;
-    const { options } = this.options;
-    const { data, formatText, renderTags, formatDataForDatabase } = this;
-    const { addCard, editCard, deleteCard } = this.props;
+    const { data, options, renderTags, formatDataForDatabase } = this;
+    const { editCard } = this.props;
 
     return (
       <>
@@ -157,7 +149,7 @@ class CardModal extends React.Component {
             onSubmit={(e) => {
               e.preventDefault();
 
-              const { isAddCard, isEditCard, isStudyCard, isDelete } = this.state;
+              const { isAddCard, isEditCard, isDelete } = this.state;
               if (isDelete) {
                 this.props.deleteCard(this.data.id);
               }
